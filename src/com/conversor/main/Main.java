@@ -64,12 +64,22 @@ public class Main {
                     continue;
                 }
 
-                default -> System.out.println("Opción no válida");
+                default -> {
+                    System.out.println("Opción no válida.\n");
+                    continue;
+                }
             }
+
+            String APIKEY = System.getenv("API_KEY");
+            if (APIKEY == null) {
+                System.out.println("API_KEY no definida");
+            }
+
+            String BASE_URL = System.getenv("BASE_URL");
 
             System.out.println("Introduce la cantidad: ");
             int amount = input.nextInt();
-            String APIKEY = "5288180949092f05a11a1db6";
+
             String url = "https://v6.exchangerate-api.com/v6/" +
                     APIKEY +
                     "/pair/" +
@@ -81,6 +91,7 @@ public class Main {
                     .uri(URI.create(url))
                     .GET()
                     .build();
+
             try {
                 HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
@@ -90,7 +101,7 @@ public class Main {
                 convertionAPI currentCovertion = gson.fromJson(json, convertionAPI.class);
 //                System.out.println(currentCovertion);
 
-                System.out.println(amount + " " + baseCode + " equivale  a " + currentCovertion.conversion_result() + " " +targetCode);
+                System.out.println(amount + " " + baseCode + " equivale a " + currentCovertion.conversion_result() + " " +targetCode);
                 System.out.println("");
 
             } catch (Exception e) {
