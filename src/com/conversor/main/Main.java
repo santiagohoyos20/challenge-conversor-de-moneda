@@ -15,8 +15,8 @@ public class Main {
 
         Scanner input = new Scanner(System.in);
         int option = 0;
-        String baseCode = "EUR";
-        String targetCode = "GBP";
+        String baseCode;
+        String targetCode;
 
         while (option != 7) {
             System.out.println("""
@@ -80,7 +80,7 @@ public class Main {
             System.out.println("Introduce la cantidad: ");
             int amount = input.nextInt();
 
-            String url = "https://v6.exchangerate-api.com/v6/" +
+            String url = BASE_URL +
                     APIKEY +
                     "/pair/" +
                     baseCode +
@@ -101,8 +101,7 @@ public class Main {
                 convertionAPI currentCovertion = gson.fromJson(json, convertionAPI.class);
 //                System.out.println(currentCovertion);
 
-                System.out.println(amount + " " + baseCode + " equivale a " + currentCovertion.conversion_result() + " " +targetCode);
-                System.out.println("");
+                System.out.println(amount + " " + baseCode + " equivale a " + currentCovertion.conversion_result() + " " +targetCode + "\n");
 
             } catch (Exception e) {
                 System.out.println("Algo falló :(");
